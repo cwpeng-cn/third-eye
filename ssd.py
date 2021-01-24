@@ -30,8 +30,7 @@ class Detector():
         return exec_net, input_blob, out_blob
 
     def read_image(self, image):
-        print(type(image))
-        if type(image) == "str":
+        if isinstance(image, str):
             image = cv2.imread(image)
         in_frame = cv2.resize(image, (W, H))
         in_frame = in_frame.transpose((2, 0, 1))  # Change data layout from HWC to CHW
