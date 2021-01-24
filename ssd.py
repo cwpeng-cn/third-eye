@@ -58,7 +58,6 @@ class Detector():
                 if h > 0 and w > 0 and 0.5 < h / w < 5 and xmin > 0 and ymin > 0 and xmax < initial_w and ymax < initial_h:
                     crop_img = image[ymin:ymax, xmin:xmax]
                     result.append(crop_img)
-                    current_time = time.strftime('%Y-%m-%d-%H:%M:%S.%f', time.localtime(time.time()))
                     name = SAVE_PATH + self.get_time_stamp() + "-p{}.jpg".format(person_id)
                     result_names.append(name)
                     person_id += 1
@@ -75,7 +74,7 @@ class Detector():
     def get_time_stamp(self):
         ct = time.time()
         local_time = time.localtime(ct)
-        data_head = time.strftime("%Y-%m-%d-%H:%M:%S", local_time)
+        data_head = time.strftime("%Y-%m-%d--%H-%M-%S", local_time)
         data_secs = (ct - int(ct)) * 1000
         time_stamp = "%s.%03d" % (data_head, data_secs)
         return time_stamp
