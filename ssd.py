@@ -7,7 +7,7 @@ MODEL_XML = './model/FP16/pedestrian-detection-adas-0002.xml'
 MODEL_BIN = './model/FP16/pedestrian-detection-adas-0002.bin'
 N, C, H, W = 1, 3, 384, 672
 THRESHOLD = 0.6
-Detected_PATH = "./temp"
+Detected_PATH = "./temp/"
 
 if not os.path.exists(Detected_PATH):
     os.makedirs(Detected_PATH)
