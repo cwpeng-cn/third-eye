@@ -108,8 +108,7 @@ if __name__ == '__main__':
     start_time = time.time()
     detector = Detector()
     print("加载成功,耗时：{}秒".format(time.time() - start_time))
-    cap = cv2.VideoCapture(0)
-    cap = cv2.VideoCapture("/home/pi/projects/openvino_test/video.avi")
+    cap = cv2.VideoCapture("./vv.mp4")
     ret, frame = cap.read()
     f_id = 0
     while cap.isOpened():
