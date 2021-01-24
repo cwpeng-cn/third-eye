@@ -40,7 +40,7 @@ class Detector():
         initial_h = image.shape[0]
         return initial_w, initial_h, frame, in_frame
 
-    def process_out(self, res, image, initial_w, initial_h, camera_id, frame_id):
+    def process_out(self, res, image, initial_w, initial_h, frame_id):
         # [1,1,200,7]
         # image_id, label, conf, x_min, y_min, x_max, y_max]
         result = []
@@ -56,7 +56,7 @@ class Detector():
                 if h > 0 and w > 0 and h / w > 0.5 and h / w < 5 and xmin > 0 and ymin > 0 and xmax < initial_w and ymax < initial_h:
                     crop_img = image[ymin:ymax, xmin:xmax]
                     result.append(crop_img)
-                    name = SAVE_PATH + "c{}_f{}_p{}.jpg".format(camera_id, frame_id, person_id)
+                    name = SAVE_PATH + "f{}_p{}.jpg".format(frame_id, person_id)
                     result_names.append(name)
                     person_id += 1
         return result, result_names
@@ -79,7 +79,7 @@ if __name__ == '__main__':
     while cap.isOpened():
         ret, frame = cap.read()
         if ret:
-            detected_imgs, names = detector.detect(frame, 0, f_id)
+            detected_imgs, names = detector.detect(frame, f_id)
             for i in range(len(names)):
                 cv2.imwrite(names[i], detected_imgs[i])
         f_id += 1
