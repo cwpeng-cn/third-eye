@@ -23,7 +23,7 @@ class Detector():
 
     def load_model(self, model_xml, model_bin):
         ie = IECore()
-        net = IECore.read_network(model=model_xml, weights=model_bin)
+        net = ie.read_network(model=model_xml, weights=model_bin)
         exec_net = ie.load_network(network=net, num_requests=1, device_name="MYRIAD")
         input_blob = next(iter(net.inputs))
         out_blob = next(iter(net.outputs))
