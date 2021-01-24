@@ -35,7 +35,6 @@ class Detector():
             image = cv2.imread(image)
         elif not isinstance(image, np.ndarray):
             raise Exception("read_image function only support str and cv2 image input")
-        print(type(image))
         in_frame = cv2.resize(image, (W, H))
         in_frame = in_frame.transpose((2, 0, 1))  # Change data layout from HWC to CHW
         in_frame = in_frame.reshape((N, C, H, W))
@@ -44,8 +43,7 @@ class Detector():
         return initial_w, initial_h, frame, in_frame
 
     def process_out(self, res, image, initial_w, initial_h, frame_id):
-        # [1,1,200,7]
-        # image_id, label, conf, x_min, y_min, x_max, y_max]
+        # [1,1,200,7]=>image_id, label, conf, x_min, y_min, x_max, y_max]
         result = []
         result_names = []
         person_id = 0
@@ -65,17 +63,16 @@ class Detector():
         return result, result_names
 
     def detect(self, img, frame_id):
+        start_time = time.time()
         initial_w, initial_h, orig_frame, in_frame = self.read_image(img)
         res = self.exec_net.infer(inputs={self.input_blob: in_frame})[self.out_blob]
         result, result_names = self.process_out(res, orig_frame, initial_w, initial_h, frame_id)
+        print("检测耗时:{}秒".format(time.time() - start_time))
         return result, result_names
 
 
 if __name__ == '__main__':
-    print("加载模型")
-    start_time = time.time()
     detector = Detector()
-    print("加载成功,耗时：{}秒".format(time.time() - start_time))
     cap = cv2.VideoCapture(0)
     ret, frame = cap.read()
     f_id = 0
