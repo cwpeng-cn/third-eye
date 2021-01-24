@@ -23,7 +23,7 @@ class Detector():
 
     def load_model(self, model_xml, model_bin):
         ie = IECore()
-        net = IENetwork(model=model_xml, weights=model_bin)
+        net = IECore.read_network(model=model_xml, weights=model_bin)
         exec_net = ie.load_network(network=net, num_requests=1, device_name="MYRIAD")
         input_blob = next(iter(net.inputs))
         out_blob = next(iter(net.outputs))
@@ -114,8 +114,8 @@ if __name__ == '__main__':
     f_id = 0
     while cap.isOpened():
         ret, frame = cap.read()
-        cv2.imshow("Detection Results", frame)
+        # cv2.imshow("Detection Results", frame)
         if f_id % 25 == 0:
             detector.detect_and_save(frame, 0, f_id)
         f_id += 1
-        cv2.waitKey(1)
+        # cv2.waitKey(1)
