@@ -92,9 +92,11 @@ class Detector():
         cv2.imwrite(save_path, crop_img)
 
     def detect_and_save(self, img, camera_id, frame_id):
+        start_time = time.time()
         initial_w, initial_h, orig_frame, in_frame = self.read_frame(img)
         res = self.exec_net.infer(inputs={self.input_blob: in_frame})[self.out_blob]
         self.process_out_and_save(res, orig_frame, initial_w, initial_h, camera_id, frame_id)
+        print("推理耗时:{}".format((time.time() - start_time) * 1000))
 
     def detect(self, img, camera_id, frame_id):
         initial_w, initial_h, orig_frame, in_frame = self.read_frame(img)
@@ -113,8 +115,6 @@ if __name__ == '__main__':
     f_id = 0
     while cap.isOpened():
         ret, frame = cap.read()
-        # cv2.imshow("Detection Results", frame)
-        if f_id % 25 == 0:
+        if ret and f_id % 10 == 0:
             detector.detect_and_save(frame, 0, f_id)
         f_id += 1
-        # cv2.waitKey(1)
