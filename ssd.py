@@ -59,7 +59,7 @@ class Detector():
                     crop_img = image[ymin:ymax, xmin:xmax]
                     result.append(crop_img)
                     current_time = time.strftime('%Y-%m-%d-%H:%M:%S.%f', time.localtime(time.time()))
-                    name = SAVE_PATH + current_time + "-p{}.jpg".format(person_id)
+                    name = SAVE_PATH + self.get_time_stamp() + "-p{}.jpg".format(person_id)
                     result_names.append(name)
                     person_id += 1
         return result, result_names
@@ -71,6 +71,14 @@ class Detector():
         result, result_names = self.process_out(res, orig_frame, initial_w, initial_h)
         print("检测耗时:{}秒".format(time.time() - start_time))
         return result, result_names
+
+    def get_time_stamp(self):
+        ct = time.time()
+        local_time = time.localtime(ct)
+        data_head = time.strftime("%Y-%m-%d-%H:%M:%S", local_time)
+        data_secs = (ct - int(ct)) * 1000
+        time_stamp = "%s.%03d" % (data_head, data_secs)
+        return time_stamp
 
 
 if __name__ == '__main__':
