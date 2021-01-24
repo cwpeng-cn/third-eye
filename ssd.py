@@ -43,7 +43,7 @@ class Detector():
         initial_h = image.shape[0]
         return initial_w, initial_h, frame, in_frame
 
-    def process_out(self, res, image, initial_w, initial_h, frame_id):
+    def process_out(self, res, image, initial_w, initial_h):
         # [1,1,200,7]=>image_id, label, conf, x_min, y_min, x_max, y_max]
         result = []
         result_names = []
@@ -59,7 +59,7 @@ class Detector():
                     crop_img = image[ymin:ymax, xmin:xmax]
                     result.append(crop_img)
                     current_time = time.strftime('%Y-%m-%d-%H:%M:%S', time.localtime(time.time()))
-                    name = SAVE_PATH + current_time + "-p{}.jpg".format(frame_id, person_id)
+                    name = SAVE_PATH + current_time + "-p{}.jpg".format(person_id)
                     result_names.append(name)
                     person_id += 1
         return result, result_names
@@ -68,7 +68,7 @@ class Detector():
         start_time = time.time()
         initial_w, initial_h, orig_frame, in_frame = self.read_image(img)
         res = self.exec_net.infer(inputs={self.input_blob: in_frame})[self.out_blob]
-        result, result_names = self.process_out(res, orig_frame, initial_w, initial_h, frame_id)
+        result, result_names = self.process_out(res, orig_frame, initial_w, initial_h)
         print("检测耗时:{}秒".format(time.time() - start_time))
         return result, result_names
 
