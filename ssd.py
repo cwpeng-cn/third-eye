@@ -61,10 +61,10 @@ class Detector():
                     person_id += 1
         return result, result_names
 
-    def detect(self, img, camera_id, frame_id):
+    def detect(self, img, frame_id):
         initial_w, initial_h, orig_frame, in_frame = self.read_image(img)
         res = self.exec_net.infer(inputs={self.input_blob: in_frame})[self.out_blob]
-        result, result_names = self.process_out(res, orig_frame, initial_w, initial_h, camera_id, frame_id)
+        result, result_names = self.process_out(res, orig_frame, initial_w, initial_h, frame_id)
         return result, result_names
 
 
