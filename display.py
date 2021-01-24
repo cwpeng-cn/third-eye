@@ -2,7 +2,8 @@ import cv2
 
 video = cv2.VideoCapture(0)  # 打开摄像头
 
-fourcc = cv2.VideoWriter_fourcc(*'XVID')  # 视频存储的格式
+# 视频存储的格式
+fourcc = cv2.VideoWriter_fourcc('m', 'p', '4', 'v')
 fps = video.get(cv2.CAP_PROP_FPS)  # 帧率
 # 视频的宽高
 size = (int(video.get(cv2.CAP_PROP_FRAME_WIDTH)), \
