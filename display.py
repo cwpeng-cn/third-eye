@@ -4,6 +4,7 @@ cap = cv2.VideoCapture(0)
 ret, frame = cap.read()
 while cap.isOpened():
     ret, frame = cap.read()
+    print(ret)
     index = 0
     if ret:
         index += 1
