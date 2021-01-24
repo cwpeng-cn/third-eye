@@ -64,7 +64,7 @@ class Detector():
                     person_id += 1
         return result, result_names
 
-    def detect(self, img, frame_id):
+    def detect(self, img):
         start_time = time.time()
         initial_w, initial_h, orig_frame, in_frame = self.read_image(img)
         res = self.exec_net.infer(inputs={self.input_blob: in_frame})[self.out_blob]
