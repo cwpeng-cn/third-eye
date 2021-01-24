@@ -1,4 +1,5 @@
 from openvino.inference_engine import IENetwork, IECore
+import numpy as np
 import cv2
 import time
 import os
@@ -32,6 +33,8 @@ class Detector():
     def read_image(self, image):
         if isinstance(image, str):
             image = cv2.imread(image)
+        elif not isinstance(image, np.ndarray):
+            raise Exception("read_image function only support str and cv2 image input")
         in_frame = cv2.resize(image, (W, H))
         in_frame = in_frame.transpose((2, 0, 1))  # Change data layout from HWC to CHW
         in_frame = in_frame.reshape((N, C, H, W))
