@@ -115,6 +115,6 @@ if __name__ == '__main__':
     f_id = 0
     while cap.isOpened():
         ret, frame = cap.read()
-        if ret and f_id % 10 == 0:
+        if ret:
             detector.detect_and_save(frame, 0, f_id)
         f_id += 1
