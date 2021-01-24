@@ -2,10 +2,9 @@ import cv2
 
 cap = cv2.VideoCapture(0)
 ret, frame = cap.read()
+index = 0
 while cap.isOpened():
     ret, frame = cap.read()
-    print(ret)
-    index = 0
     if ret:
         index += 1
         if index % 10 == 0:
