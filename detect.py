@@ -3,6 +3,10 @@ import numpy as np
 import cv2
 import time
 import os
+import requests
+import json
+import base64
+from utils import *
 
 MODEL_XML = './model/FP16/pedestrian-detection-adas-0002.xml'
 MODEL_BIN = './model/FP16/pedestrian-detection-adas-0002.bin'
@@ -90,3 +94,4 @@ if __name__ == '__main__':
             detected_imgs, names = detector.detect(frame)
             for i in range(len(names)):
                 cv2.imwrite(names[i], detected_imgs[i])
+                send(names[i])

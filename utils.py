@@ -1,8 +1,8 @@
 import requests
 import json
 import base64
-import os
 
+URL = 'http://43.129.251.135:8080/upload'
 PATH = "./temp"
 
 
@@ -13,10 +13,12 @@ def getByte(path):
     return img_str
 
 
-for name in os.listdir(PATH):
-    path = os.path.join(PATH, name)
+def send(path):
     img_str = getByte(path)
-    url = 'http://43.129.251.135:8080/upload'
-    data = {'picture': [{"filename": name, "content": img_str}]}
+    data = {'picture': [{"filename": path.split("/")[-1], "content": img_str}]}
     json_mod = json.dumps(data)
-    res = requests.post(url=url, data=json_mod)
+    requests.post(url=URL, data=json_mod)
+
+# for name in os.listdir(PATH):
+#     path = os.path.join(PATH, name)
+#     send(path)
